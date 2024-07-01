@@ -1,0 +1,55 @@
+<%- include('../partials/head.ejs') %>
+<%- include('../partials/menu.ejs') %>
+<br>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            Meu Perfil
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="col-5">Nome do Usuário</th>
+                        <th class="col-5">E-mail</th>
+                        <th class="col-2">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% usuarios.forEach(function(usuario) { %>
+                    <tr>
+                        <td><%= usuario.nome %></td>
+                        <td><%= usuario.email %></td>
+                        <td>
+                            <a href="/usuarios/<%= usuario.id %>" class="btn btn-primary"><i class="fa fa-pencil-alt"></i> Editar</a>
+                            <a href="#" class="btn btn-danger delete-btn" data-id="<%= usuario.id %>"><i class="fa fa-times"></i> Excluir</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="/usuarios/logout/<%= usuario.id %>" class="btn btn-danger"><i class="fa fa-sign-out-alt"></i> Logout</a>
+            <% }); %>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer.ejs') %>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevenir o comportamento padrão do link
+
+                const userId = this.getAttribute('data-id');
+                const confirmDelete = confirm('Tem certeza que deseja excluir este usuário?');
+
+                if (confirmDelete) {
+                    window.location.href = '/usuarios/delete/' + userId;
+                }
+            });
+        });
+    });
+</script>

@@ -1,0 +1,57 @@
+<%- include('./partials/head.ejs') %>
+<div class="container">
+    <div 
+        class="card position-absolute top-50 start-50 translate-middle"
+        style="width: 18rem;">
+        <div class="card-header bg-primary text-white font-weight-bold">Login</div>
+        <div class="card-body">
+            <form method="post" action="/usuarios/login">
+                <div class="form-floating mb-3">
+                    <input
+                        type="text"
+                        name="email"
+                        id="email"
+                        class="form-control"
+                        placeholder="Digite o seu e-mail">
+                    <label for="email">Digite o seu e-mail</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input
+                        type="password"
+                        name="senha"
+                        id="senha"
+                        class="form-control"
+                        placeholder="Digite a sua senha">
+                    <label for="email">Digite a sua senha</label>
+                </div>
+                <br>
+                <% if(msg != '') { %>
+                    <div class="alert alert-danger">
+                        <%= msg %>
+                    </div>
+                <% }%>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+            <div class="d-grid gap-2 col-6 mx-auto mt-3">
+                <button id="cadastroBtn" class="btn btn-success">Cadastre-se</button>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('./partials/footer.ejs') %>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const emailInput = document.getElementById('email');
+
+        emailInput.addEventListener('input', function() {
+            this.value = this.value.toLowerCase();
+        });
+    });
+
+    document.getElementById('cadastroBtn').addEventListener('click', function() {
+        window.location.href = '/usuarios/novo';
+    });
+</script>

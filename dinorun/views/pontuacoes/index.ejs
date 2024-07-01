@@ -1,0 +1,67 @@
+<%- include('../partials/head.ejs') %>
+<%- include('../partials/menu.ejs') %> 
+
+<div class="container">
+    <br>
+    <div class="card">
+        <div class="btn-group" style="outline: 1px solid black">
+            <button type="button" class="btn btn-primary" style="border-right: 2px solid black;" onclick="toggleTable('tabelaTodasPartidas', 'tabelaMelhoresPontuacoes')"><i class="fas fa-list"></i> Todas as partidas</button>
+            <button type="button" class="btn btn-primary" onclick="toggleTable('tabelaMelhoresPontuacoes', 'tabelaTodasPartidas')"> <i class="fas fa-trophy"></i> Melhores pontuações</button>
+        </div>
+        <div class="card-body">
+            <!-- Tabela de todas as partidas -->
+            <table class="table table-bordered" id="tabelaTodasPartidas">
+                <thead>
+                    <tr>
+                        <th>Partida Nº</th>
+                        <th>Usuário</th>
+                        <th>Pontuação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% partidas.sort((a, b) => b.id - a.id).forEach(partida => { %>
+                        <tr>
+                            <td><%= partida.id %></td>
+                            <td><%= partida.usuario.nome %></td>
+                            <td><%= partida.pontuacao %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+
+            <!-- Tabela de melhores pontuações (começa oculta) -->
+            <table class="table table-bordered" id="tabelaMelhoresPontuacoes" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Partida Nº</th>
+                        <th>Usuário</th>
+                        <th>Pontuação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% partidas.sort((a, b) => b.pontuacao - a.pontuacao).forEach(partida => { %>
+                        <tr>
+                            <td><%= partida.id %></td>
+                            <td><%= partida.usuario.nome %></td>
+                            <td><%= partida.pontuacao %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleTable(showTableId, hideTableId) {
+        var showTable = document.getElementById(showTableId);
+        var hideTable = document.getElementById(hideTableId);
+        
+        // Define para a tabela ser mostrada
+        showTable.style.display = "table";
+        // Define para a tabela para se ocultar
+        hideTable.style.display = "none";
+    }
+</script>
+
+<%- include('../partials/footer.ejs') %>
